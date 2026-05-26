@@ -3,39 +3,36 @@ import google.generativeai as genai
 import requests
 from PIL import Image
 from io import BytesIO
-import os
 
 st.set_page_config(page_title="AI YouTube Thumbnail Generator", layout="centered")
 st.title("🎬 Free AI YouTube Thumbnail Generator")
-st.subheader("Upload your Short or Video to generate a viral thumbnail")
+st.subheader("Enter your video details to generate a viral thumbnail")
 
 api_key = st.text_input("Enter your Gemini API Key:", type="password")
 if api_key:
     genai.configure(api_key=api_key)
 
-uploaded_video = st.file_uploader("Upload your video file (.mp4, .mov)", type=["mp4", "mov"])
+# Changed from video upload to text inputs to bypass Google's billing rule
+video_title = st.text_input("What is your video title?", placeholder="e.g., I Survived 24 Hours In A Desert")
+video_desc = st.text_area("Describe what happens in the video:", placeholder="e.g., I had to find water, build a shelter out of cacti, and avoid scorpions at night.")
 
-if uploaded_video and api_key:
-    st.video(uploaded_video)
-    
-    if st.button("🚀 Analyze Video & Generate Thumbnail"):
-        with st.spinner("Gemini is analyzing your video scenes and core hook..."):
-            with open("temp_video.mp4", "wb") as f:
-                f.write(uploaded_video.read())
-                
-            video_file = genai.upload_file(path="temp_video.mp4")
+if video_title and video_desc and api_key:
+    if st.button("🚀 Generate Thumbnail"):
+        with st.spinner("Gemini is analyzing your hook and planning the visuals..."):
+            
             model = genai.GenerativeModel(model_name="gemini-2.5-flash")
-            prompt = """
-            Analyze this video or YouTube Short. Identify the most exciting, emotional, or shocking moment. 
-            Create a highly descriptive image generation prompt for a YouTube Thumbnail based on it.
-            The prompt must imply high-contrast, viral-style framing, vibrant colors, and cinematic lighting. 
-            Return ONLY the text prompt for the image generator, nothing else.
+            
+            prompt = f"""
+            You are an expert YouTube designer. Based on the video title "{video_title}" and description "{video_desc}",
+            create a highly descriptive image generation prompt for a YouTube Thumbnail.
+            The visual concept must be click-worthy, dramatic, high-contrast, with vibrant colors and clear cinematic framing.
+            Return ONLY the text prompt for the image generator, nothing else. Do not include markdown formatting.
             """
-            response = model.generate_content([video_file, prompt])
+            
+            response = model.generate_content(prompt)
             thumbnail_prompt = response.text
             
-            st.success("✨ Video Analysis Complete!")
-            st.write(f"**Generated Concept:** {thumbnail_prompt}")
+            st.success("✨ Visual Concept Created!")
             
         with st.spinner("Generating viral thumbnail image..."):
             encoded_prompt = requests.utils.quote(thumbnail_prompt)
@@ -52,6 +49,3 @@ if uploaded_video and api_key:
                 st.download_button(label="📥 Download Thumbnail", data=byte_im, file_name="thumbnail.jpg", mime="image/jpeg")
             else:
                 st.error("Failed to generate image. Try again!")
-                
-        os.remove("temp_video.mp4")
-      
