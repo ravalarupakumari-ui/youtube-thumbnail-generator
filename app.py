@@ -5,13 +5,16 @@ import urllib.parse
 # Page configuration
 st.set_page_config(page_title="VividThumbnail Pro Studio", page_icon="🔥", layout="centered")
 
-# Your updated WhatsApp Business Number (91 for India)
+# Your WhatsApp Business Number (91 for India)
 YOUR_WHATSAPP_NUMBER = "919848887073" 
 
-# Safe Native App Header (No raw HTML tags to prevent TypeErrors)
+# Highlight Banner for Mobile Users to see the sidebar settings toggle
+st.warning("👉 MOBILE USERS: Tap the small double arrows ( ☰ or ❯ ) in the upper left/right corner to open settings or manage your profile!")
+
+# Native App Header
 st.title("🔥 VividThumbnail Pro Studio")
 st.subheader("Where Viral Concepts Are Made Manually")
-st.caption("Skip the basic AI templates. Get a custom, high-CTR thumbnail engineered by a professional designer to dominate the algorithm.")
+st.caption("Skip basic templates. Get a custom, high-CTR thumbnail engineered by a professional designer to dominate the algorithm.")
 st.markdown("---")
 
 # Client Inputs
@@ -55,16 +58,16 @@ if video_title and uploaded_image:
 • Title: {video_title}
 • Vibe/Style: {style_preference}
 
-🖼️ NOTE: I have uploaded my reference image on the portal and am sending it along over chat now!"""
+🖼️ REMINDER: Sending my reference image right below this text!"""
 
     # Encode message safely for URLs
     encoded_message = urllib.parse.quote(raw_message)
     whatsapp_url = f"https://wa.me/{YOUR_WHATSAPP_NUMBER}?text={encoded_message}"
     
-    # Safe Streamlit Native Link Button for high-visibility
+    # High-visibility Link Button
     st.link_button("💬 SUBMIT ORDER VIA WHATSAPP", whatsapp_url, use_container_width=True)
     
-    st.caption("👉 Clicking the green button opens WhatsApp instantly. Make sure to attach your uploaded image to the chat window so I can download it in full quality!")
+    st.caption("💡 Note: Clicking the button launches your WhatsApp chat instantly. Simply press send on the pre-filled text, then tap the attachment icon to send over your reference image in full resolution!")
 
 else:
     st.warning("💡 Fill out your Video Title and upload a reference photo above to activate your order funnel.")
