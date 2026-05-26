@@ -42,11 +42,10 @@ uploaded_image = st.file_uploader("Upload a reference screenshot or character cu
 if uploaded_image:
     ref_image = Image.open(uploaded_image)
     with st.expander("🖼️ View Uploaded Reference Frame", expanded=True):
-        st.image(ref_image, use_container_width=True)
+        st.image(ref_image, use_column_width="always")
 
 # Generation logic
 if video_title and uploaded_image and api_key:
-    st.markdown("<br>", unsafe_allowed_html=True)
     if st.button("🚀 GENERATE 20K WORTHY THUMBNAIL"):
         
         with st.spinner("⚡ Step 1: Gemini is extracting visual subjects and tracking composition hooks..."):
@@ -77,10 +76,11 @@ if video_title and uploaded_image and api_key:
                 img.save(buf, format="JPEG")
                 byte_im = buf.getvalue()
                 
+                st.markdown("---")
                 st.markdown("### 🏆 Your Optimized Production Thumbnail")
                 
-                # Native container width scaling to prevent top/bottom compression completely
-                st.image(img, use_container_width=True, caption="Final Rendered Concept (16:9 Cinema Aspect)")
+                # Locked 16:9 responsive display with no compression
+                st.image(img, use_column_width="always", caption="Final Rendered Concept (16:9 Cinema Aspect)")
                 
                 # High-visibility Download Button
                 st.download_button(
