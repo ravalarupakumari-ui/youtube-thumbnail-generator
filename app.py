@@ -5,16 +5,14 @@ import urllib.parse
 # Page configuration
 st.set_page_config(page_title="VividThumbnail Pro Studio", page_icon="🔥", layout="centered")
 
-# Your updated WhatsApp Business Number
+# Your updated WhatsApp Business Number (91 for India)
 YOUR_WHATSAPP_NUMBER = "919848887073" 
 
-# Custom Dark Cinematic Header
+# Safe Native App Header (No raw HTML tags to prevent TypeErrors)
 st.title("🔥 VividThumbnail Pro Studio")
-st.markdown("""
-    <h3 style='color: #ff4b4b; margin-top: -15px;'>Where Viral Concepts Are Made Manually</h3>
-    <p style='color: #9ca3af;'>Skip the basic AI templates. Get a custom, high-CTR thumbnail engineered by a professional designer to dominate the algorithm.</p>
-    <hr style='border-color: #262730;'>
-""", unsafe_allowed_html=True)
+st.subheader("Where Viral Concepts Are Made Manually")
+st.caption("Skip the basic AI templates. Get a custom, high-CTR thumbnail engineered by a professional designer to dominate the algorithm.")
+st.markdown("---")
 
 # Client Inputs
 st.markdown("### 📝 Step 1: Video Presentation")
@@ -63,25 +61,8 @@ if video_title and uploaded_image:
     encoded_message = urllib.parse.quote(raw_message)
     whatsapp_url = f"https://wa.me/{YOUR_WHATSAPP_NUMBER}?text={encoded_message}"
     
-    # CTA Order Button with WhatsApp branding
-    st.markdown(f"""
-        <a href="{whatsapp_url}" target="_blank" style="text-decoration: none;">
-            <button style="
-                background: linear-gradient(90deg, #25D366 0%, #128C7E 100%);
-                color: white;
-                font-weight: bold;
-                font-size: 18px;
-                border: none;
-                padding: 15px 30px;
-                border-radius: 8px;
-                width: 100%;
-                cursor: pointer;
-                box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
-                transition: transform 0.2s;">
-                💬 SUBMIT ORDER VIA WHATSAPP
-            </button>
-        </a>
-    """, unsafe_allowed_html=True)
+    # Safe Streamlit Native Link Button for high-visibility
+    st.link_button("💬 SUBMIT ORDER VIA WHATSAPP", whatsapp_url, use_container_width=True)
     
     st.caption("👉 Clicking the green button opens WhatsApp instantly. Make sure to attach your uploaded image to the chat window so I can download it in full quality!")
 
