@@ -2,14 +2,21 @@ import streamlit as st
 from PIL import Image
 import urllib.parse
 
-# Page configuration
-st.set_page_config(page_title="VividThumbnail Pro Studio", page_icon="🔥", layout="centered")
+# Your direct GitHub raw image link for the home screen icon
+LOGO_URL = "https://raw.githubusercontent.com/ravalarupakumari-ui/youtube-thumbnail-generator/main/logo.png"
+
+# Page configuration - Locks your custom logo image as the app icon
+st.set_page_config(
+    page_title="VividThumbnail Pro Studio", 
+    page_icon=LOGO_URL, 
+    layout="centered"
+)
 
 # Your WhatsApp Business Number (91 for India)
 YOUR_WHATSAPP_NUMBER = "919848887073" 
 
 # Highlight Banner for Mobile Users to see the sidebar settings toggle
-st.warning("👉 MOBILE USERS: Tap the small double arrows ( ☰ or ❯ ) in the upper left/right corner to open settings or manage your profile!")
+st.warning("👉 MOBILE USERS: Tap the small double arrows ( ☰ or ❯ ) in the upper left corner to adjust configurations!")
 
 # Native App Header
 st.title("🔥 VividThumbnail Pro Studio")
