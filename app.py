@@ -3,6 +3,7 @@ import google.generativeai as genai
 import requests
 from PIL import Image
 from io import BytesIO
+import random
 
 # Page setup
 st.set_page_config(page_title="VividThumbnail AI Pro", page_icon="🎬", layout="centered")
@@ -65,17 +66,12 @@ if video_title and uploaded_image and api_key:
             
         with st.spinner("🎨 Step 2: Rendering widescreen layout canvas..."):
             encoded_prompt = requests.utils.quote(thumbnail_prompt)
-            image_url = f"https://image.pollinations.ai/p/{encoded_prompt}?width=1280&height=720&enhance=true"
-            img_response = requests.get(image_url)        with st.spinner("🎨 Step 2: Rendering widescreen layout canvas..."):
-            encoded_prompt = requests.utils.quote(thumbnail_prompt)
             
-            # Added random seed parameter to bypass generator traffic drops
-            import random
+            # Optimized safe delivery route
             random_seed = random.randint(1, 99999)
             image_url = f"https://image.pollinations.ai/p/{encoded_prompt}?width=1280&height=720&enhance=true&seed={random_seed}"
             
             img_response = requests.get(image_url)
-            
             
             if img_response.status_code == 200:
                 img = Image.open(BytesIO(img_response.content))
